@@ -66,7 +66,9 @@ Please note that:
    it were launched without procspotter;
 6) with -p argument statistics for all characteristics are calculated 
    and output, so for fields like 'Command' or 'CPU' it shouldn't be
-   considered.
+   considered;
+7) time utility shouldn't be used within the command: procspotter's 
+   log parser will print total execution time anyway.
 
 Usage:
   procspotter.py -c <command> -l <pidstat_log_name> [--verbose --args <arguments_for_pidstat>]
