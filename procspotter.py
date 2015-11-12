@@ -46,11 +46,27 @@ procspotter.py -c <command> -l <pidstat_lot_name> --args "-u 2 10"
 where 2 is a value of 'interval' argument and 10 is a value
 of 'count' argument.
 
-Please note that neither the <command> nor the value 
-of '--args' argument is checked for correctness and safety.
-The <command> must be executed at least for several
-seconds for pidstat to collect some statistics. <command>
-mustn't contain output redirectiron ('>') or pipes ('|').
+When -p argument is given, a pidstat log file is parsed, and 
+some overall statistics are calculated and output - maximum and
+average value for each characteristic. If a characteristic is 
+not numerical (e. g., 'Command'), corresponding statistics are 
+set to zero.
+
+Please note that:
+1) neither the <command> nor the value of '--args' argument 
+   is checked for correctness and safety;
+2) the <command> must be executed at least for several seconds for 
+   pidstat to collect some statistics; for 1 - 3 seconds at the
+   very begining statistics is not collected;
+3) <command> mustn't contain output redirectiron ('>') or 
+   pipes ('|');
+4) if -u argument for pidstat is set manually via --args argument,
+   then its value should be less than a day;
+5) <command> will output to stdout and/or stderr just as if
+   it were launched without procspotter;
+6) with -p argument statistics for all characteristics are calculated 
+   and output, so for fields like 'Command' or 'CPU' it shouldn't be
+   considered.
 
 Usage:
   procspotter.py -c <command> -l <pidstat_log_name> [--verbose --args <arguments_for_pidstat>]
