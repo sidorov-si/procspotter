@@ -113,6 +113,7 @@ from os.path import isfile
 
 
 def print_stats(total_time, headers, values, log_name):
+    print
     print "Statistics from", log_name + ':'
     print 
     print "Total time:", total_time
@@ -171,6 +172,9 @@ def parse_pidstat(log_name):
         value_line = log.readline()
         while value_line != '\n':
             counter += 1
+            if counter % 1000 == 0:
+                print 'Processed', counter, 'records.'
+                stdout.flush()
             header_fields = header_line.strip('\n').split()
             current_fields = header_fields[4:]
             header_joint = ''.join(current_fields)
@@ -248,7 +252,7 @@ if __name__ == '__main__':
             print "Error: Can't find log file: no such file '" + \
                   log_name + "'. Exit.\n"
             sys.exit(1)
-        if not isfile(log_file):
+        if not isfile(log_name):
             print "Error: log filemust be a regular file. " + \
                   "Something else given. Exit.\n"
             sys.exit(1)
