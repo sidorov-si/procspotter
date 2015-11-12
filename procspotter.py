@@ -87,7 +87,7 @@ import sys
 
 print
 
-modules = ["docopt", "subprocess", "datetime"]
+modules = ["docopt", "subprocess", "datetime", "os"]
 exit_flag = False
 for module in modules:
     try:
@@ -106,6 +106,8 @@ from docopt import docopt
 from sys import stdout
 import subprocess
 import datetime
+from os.path import exists
+from os.path import isfile
 
 
 def print_stats(total_time, headers, values, log_name):
@@ -215,6 +217,7 @@ def set_pidstat(command, log_name, verbose, args):
             print command
             print 'PID:', pid
             print 'All statistics are being logged in', log_name
+            stdout.flush()
         pidstat_args = args if args != None else '-d -r -u 2'
         pidstat_args_list = pidstat_args.split()
         pidstat_list = ['pidstat', '-p', pid] + pidstat_args_list
@@ -224,6 +227,7 @@ def set_pidstat(command, log_name, verbose, args):
             print 'Statistics are being collected with the following pidstat process:'
             print ' '.join(pidstat_list), '>', log_name
             print 'PID of the pidstat process:', pidstat_pid
+            stdout.flush()
 
 
 if __name__ == '__main__':
@@ -238,6 +242,14 @@ if __name__ == '__main__':
     elif arguments["-p"] != None:
         case = "parse"
         log_name = arguments["-p"]
+        if not exists(log_name):
+            print "Error: Can't find log file: no such file '" + \
+                  log_name + "'. Exit.\n"
+            sys.exit(1)
+        if not isfile(log_file):
+            print "Error: log filemust be a regular file. " + \
+                  "Something else given. Exit.\n"
+            sys.exit(1)
     
     if case == "watch":
         set_pidstat(command, log_name, verbose, args)
