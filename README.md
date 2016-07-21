@@ -3,7 +3,7 @@
 Monitor a process resource usage with `pidstat` utility.
 Process here is defined with a PID set with `-w` argument.
 
-## Usage:
+## Usage
 
     procspotter.py -w PID -l pidstat_log_name [--args arguments_for_pidstat]
 
@@ -12,15 +12,10 @@ Process here is defined with a PID set with `-w` argument.
 Options:
 
     -h --help                     Show this screen.
-
     --version                     Show version.
-
     -w PID                        PID of the process to be watched with pidstat.
-
     -l pidstat_log_name           Name of a log file for pidstat output.
-
     -p pidstat_log_name           Parse log file and print statistics.
-
     --args arguments_for_pidstat  Arguments for pidstat. Default: ''.
 
 ## Example
@@ -51,7 +46,7 @@ Options:
     Max:    0.000         6976.000      0.000         0.000         
     Avg:    0.000         5946.111      0.000         0.000
 
-When `-p` ('parse') argument is given to procspotter, a pidstat log file is parsed and maximum and average values are calculated for all statistics measured by `pidstat`. If some statistic is not numerical (e. g., 'Command'), corresponding statistics are set to zero.
+When `-p` ('parse') argument is given to procspotter, a pidstat log file is parsed and maximum and average values are calculated for all statistics measured by `pidstat`. If some statistic is not numerical (e. g., 'Command'), corresponding statistics are set to zero. For the whole set of statistics that can be measured by pidstat see `man pidstat`.
 
 ## Requirements
 
@@ -70,15 +65,10 @@ By default, `pidstat` is launched with the following arguments:
 where 
 
     -p sets the process ID that is defined in -w ('watch') argument of `procspotter`,
-
     -d is for disk I/O statistics,
-
     -r is for memory utilization statistics,
-
     -u is for CPU utilization statistics,
-
     2 is an interval (in seconds) between two measurements.
-
     pidstat_log_name is set with -l argument of `procspotter`.
 
 'count' argument for pidstat is not set here, so `pidstat` will collect statictics until the process finishes.
