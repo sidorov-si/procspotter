@@ -1,27 +1,27 @@
 # procspotter
 
 Monitor a process resource usage with `pidstat` utility.
-Process here is defined with a PID set with -w argument.
+Process here is defined with a PID set with `-w` argument.
 
 ## Usage:
 
-  procspotter.py -w PID -l pidstat_log_name [--args arguments_for_pidstat]
+    procspotter.py -w PID -l pidstat_log_name [--args arguments_for_pidstat]
 
-  procspotter.py -p pidstat_log_name
+    procspotter.py -p pidstat_log_name
 
 Options:
 
-  -h --help                     Show this screen.
+    -h --help                     Show this screen.
 
-  --version                     Show version.
+    --version                     Show version.
 
-  -w PID                        PID of the process to be watched with pidstat.
+    -w PID                        PID of the process to be watched with pidstat.
 
-  -l pidstat_log_name           Name of a log file for pidstat output.
+    -l pidstat_log_name           Name of a log file for pidstat output.
 
-  -p pidstat_log_name           Parse log file and print statistics.
+    -p pidstat_log_name           Parse log file and print statistics.
 
-  --args arguments_for_pidstat  Arguments for pidstat. Default: ''.
+    --args arguments_for_pidstat  Arguments for pidstat. Default: ''.
 
 ## Example
 
@@ -51,7 +51,13 @@ Options:
     Max:    0.000         6976.000      0.000         0.000         
     Avg:    0.000         5946.111      0.000         0.000
 
+When `-p` ('parse') argument is given to procspotter, a pidstat log file is parsed and maximum and average values are calculated for all statistics measured by `pidstat`. If some statistic is not numerical (e. g., 'Command'), corresponding statistics are set to zero.
+
+## Requirements
+
 `sysstat` package must be installed before the first use of procspotter (it contains `pidstat`).
+
+## `--args` argument
 
 For all procspotter arguments you can find short explanation above. `--args` argument though is worth explaining a little deeper. You want to use `--args` when some specific statistics should be collected. The value of this argument should be set in double quotes.
 
@@ -63,17 +69,17 @@ By default, `pidstat` is launched with the following arguments:
 
 where 
 
-      -p sets the process ID that is defined in -w ('watch') argument of `procspotter`,
+    -p sets the process ID that is defined in -w ('watch') argument of `procspotter`,
 
-      -d is for disk I/O statistics,
+    -d is for disk I/O statistics,
 
-      -r is for memory utilization statistics,
+    -r is for memory utilization statistics,
 
-      -u is for CPU utilization statistics,
+    -u is for CPU utilization statistics,
 
-      2 is an interval (in seconds) between two measurements.
+    2 is an interval (in seconds) between two measurements.
 
-      pidstat_log_name is set with -l argument of `procspotter`.
+    pidstat_log_name is set with -l argument of `procspotter`.
 
 'count' argument for pidstat is not set here, so `pidstat` will collect statictics until the process finishes.
 
@@ -89,9 +95,7 @@ You can do it with `--args` as follows:
 
 where `2` is a value of `interval` argument and `10` is a value of `count` argument.
 
-When `-p` ('parse') argument is given to procspotter, a pidstat log file is parsed and maximum and average values are calculated for all statistics measured by `pidstat`. If some statistic is not numerical (e. g., 'Command'), corresponding statistics are set to zero.
-
-Please note that:
+## Remarks
 
 1. Neither a PID nor a value of `--args` argument is checked for correctness and safety.
 2. Process with a given PID must be executed at least for several seconds for `pidstat` to collect some statistics; for 1 - 3 seconds at the very begining statistics are not collected.
